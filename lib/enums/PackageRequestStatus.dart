@@ -1,0 +1,9 @@
+enum PackageRequestStatus{
+  PENDING,
+  APPROVED,
+  CANCELLED,
+  MATCHED_BY_SERVER,
+  PICKED_UP,
+  DELIVERED
+
+}

@@ -1,0 +1,72 @@
+{
+  "project_info": {
+    "project_number": "238521846929",
+    "firebase_url": "https://carrywiz-c8b06.firebaseio.com",
+    "project_id": "carrywiz-c8b06",
+    "storage_bucket": "carrywiz-c8b06.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:238521846929:android:2521295b1ef6d489b6c330",
+        "android_client_info": {
+          "package_name": "com.advintic.carrywiz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "238521846929-nn2a3mtssj0kbkonsviduivqkc24sc4v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.advintic.carrywiz",
+            "certificate_hash": "c81170f5d0d1d56b436b91e58f7d312f1584b3e7"
+          }
+        },
+        {
+          "client_id": "238521846929-c28or84nogoeg1l5rj08mdkfb624220d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.advintic.carrywiz",
+            "certificate_hash": "9b092df1459193aab9f00ad0f591ac0f99fafcfc"
+          }
+        },
+        {
+          "client_id": "238521846929-hor4mubhn1q5cn5ucffprsvbari6006c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.advintic.carrywiz",
+            "certificate_hash": "d3a88efc483059ba180b871aa7e4828afc64b4f0"
+          }
+        },
+        {
+          "client_id": "238521846929-bs87n1lgjvvlhe4priofjrkrhadbtqp5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.advintic.carrywiz",
+            "certificate_hash": "f984228a1cba1132a8736514aa9d54b0973f1b5c"
+          }
+        },
+        {
+          "client_id": "238521846929-v64rkmnkc3j34gorj0q56m8951bagen8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvdNkKLmqEMWhFS-jDPjStsbe4anjoXrg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "238521846929-v64rkmnkc3j34gorj0q56m8951bagen8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
