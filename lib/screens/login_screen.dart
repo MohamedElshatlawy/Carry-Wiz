@@ -1,24 +1,24 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter_login_facebook/flutter_login_facebook.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
+
 import '../components/NetworkSensitive.dart';
 import '../components/facebook-login.dart';
 import '../components/submit-button.dart';
 import '../components/switch-buttons.dart';
 import '../injector/injector.dart';
-import '../models/Token.dart';
+import '../localization/language_constants.dart';
+import '../models/UserModel.dart';
 import '../screens/forgot-password.dart';
 import '../screens/my-home-page.dart';
 import '../services/ApiAuthProvider.dart';
@@ -29,8 +29,6 @@ import '../utilities/SharedPreferencesManager.dart';
 import '../utilities/globals.dart' as globals;
 import '../utilities/text-styles.dart';
 import '../utilities/validations.dart';
-import '../models/UserModel.dart';
-import '../localization/language_constants.dart';
 
 void main() {
   runApp(
@@ -111,28 +109,26 @@ class _UserLoginState extends State<UserLogin> {
                     minHeight: MediaQuery.of(context).size.height),
                 child: Container(
                   padding: EdgeInsets.symmetric(
-                      vertical: ScreenUtil().setHeight(20),
-                      horizontal: ScreenUtil().setWidth(150)),
+                      vertical: ScreenUtil().setHeight(55),
+                      horizontal: ScreenUtil().setWidth(40)),
                   child: Form(
                     key: _formKey,
                     autovalidate: _autoValidate,
                     child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        SizedBox(
-                          height: ScreenUtil().setHeight(100),
-                        ),
                         RichText(
                           text: TextSpan(
                             text: 'Carry',
                             style: TextStyle(
-                                fontSize: ScreenUtil().setSp(80),
+                                fontSize: ScreenUtil().setSp(35),
                                 fontWeight: FontWeight.w400,
                                 color: Palette.deepPurple),
                             children: <TextSpan>[
                               TextSpan(
                                 text: 'wiz.',
                                 style: TextStyle(
-                                    fontSize: ScreenUtil().setSp(80),
+                                    fontSize: ScreenUtil().setSp(35),
                                     fontWeight: FontWeight.w800,
                                     color: Palette.deepPurple),
                               ),
@@ -140,11 +136,11 @@ class _UserLoginState extends State<UserLogin> {
                           ),
                         ),
                         SizedBox(
-                          height: ScreenUtil().setHeight(60),
+                          height: ScreenUtil().setHeight(15),
                         ),
                         SwitchButtons(),
                         SizedBox(
-                          height: ScreenUtil().setHeight(50.0),
+                          height: ScreenUtil().setHeight(25),
                         ),
                         TextFormField(
                           keyboardType: TextInputType.emailAddress,
@@ -158,7 +154,11 @@ class _UserLoginState extends State<UserLogin> {
                           onSaved: (String? val) {
                             _email = val!.toLowerCase();
                           },
-                          style: TextStyle(height: ScreenUtil().setHeight(3)),
+                          style: TextStyle(
+                              height: ScreenUtil().setHeight(2.5),
+                              fontSize: ScreenUtil().setSp(10),
+                              fontWeight: FontWeight.w400,
+                              color: Palette.deepPurple),
                           decoration: InputDecoration(
                             labelText:
                                 getTranslatedValues(context, 'email_address'),
@@ -171,6 +171,14 @@ class _UserLoginState extends State<UserLogin> {
                             ),
                             labelStyle: TextStyles.textFieldStyle,
                             errorStyle: TextStyles.errorStyle,
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(6)),
+                              borderSide: BorderSide(
+                                  width: 1,
+                                  color: Palette.lightPurple,
+                                  style: BorderStyle.solid),
+                            ),
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(6)),
@@ -182,7 +190,7 @@ class _UserLoginState extends State<UserLogin> {
                           ),
                         ),
                         SizedBox(
-                          height: ScreenUtil().setHeight(35),
+                          height: ScreenUtil().setHeight(15),
                         ),
                         TextFormField(
                           obscureText: true,
@@ -196,7 +204,11 @@ class _UserLoginState extends State<UserLogin> {
                           onSaved: (String? val) {
                             _password = val!;
                           },
-                          style: TextStyle(height: 1),
+                          style: TextStyle(
+                              height: ScreenUtil().setHeight(2.5),
+                              fontSize: ScreenUtil().setSp(10),
+                              fontWeight: FontWeight.w400,
+                              color: Palette.deepPurple),
                           decoration: InputDecoration(
                             labelText: "Password",
                             hintText: "Password",
@@ -214,6 +226,14 @@ class _UserLoginState extends State<UserLogin> {
                                   color: Colors.white,
                                   style: BorderStyle.solid),
                             ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(6)),
+                              borderSide: BorderSide(
+                                  width: 1,
+                                  color: Palette.lightPurple,
+                                  style: BorderStyle.solid),
+                            ),
                           ),
                         ),
                         FlatButton(
@@ -221,7 +241,7 @@ class _UserLoginState extends State<UserLogin> {
                           child: Text('Forgot Password?',
                               style: TextStyle(
                                   color: Palette.lightPurple,
-                                  fontSize: ScreenUtil().setSp(40),
+                                  fontSize: ScreenUtil().setSp(15),
                                   fontWeight: FontWeight.w500)),
                           onPressed: () => Navigator.push(
                             context,
@@ -244,16 +264,18 @@ class _UserLoginState extends State<UserLogin> {
                                 onPressed: () async {
                                   if (_validateInputs()) {
                                     var connectionStatus;
-                                    InternetConnectionChecker()
+                                    await InternetConnectionChecker()
                                         .connectionStatus
-                                        .then((value) =>
-                                            connectionStatus = value);
+                                        .then((value) {
+                                      connectionStatus = value;
+                                      print(value);
+                                    });
                                     if (connectionStatus ==
                                         InternetConnectionStatus.connected) {
                                       try {
                                         _turnOnCircularBar();
-                                        Token? token = await apiAuthProvider
-                                            .authenticate();
+                                        // Token? token = await apiAuthProvider
+                                        //     .authenticate();
                                         await apiAuthProvider
                                             .login(
                                                 email: _email,
@@ -267,10 +289,10 @@ class _UserLoginState extends State<UserLogin> {
                                               SharedPreferencesManager
                                                   .keyUserName,
                                               value.userName);
-                                          _sharedPreferencesManager.putString(
-                                              SharedPreferencesManager
-                                                  .keyAccessToken,
-                                              token!.accessToken);
+                                          // _sharedPreferencesManager.putString(
+                                          //     SharedPreferencesManager
+                                          //         .keyAccessToken,
+                                          //     token!.accessToken);
                                           // final storage =
                                           //     new FlutterSecureStorage();
                                           // storage.write(
@@ -285,6 +307,7 @@ class _UserLoginState extends State<UserLogin> {
                                                   .keyIsLogin,
                                               true);
                                           _sendTokenToServer(value.userId);
+
                                           Toast.show(
                                               getTranslatedValues(
                                                   context, 'login_success'),
@@ -314,7 +337,7 @@ class _UserLoginState extends State<UserLogin> {
                                 buttonColor: Palette.lightOrange,
                               ),
                               SizedBox(
-                                height: ScreenUtil().setHeight(35),
+                                height: ScreenUtil().setHeight(15),
                               ),
                               Container(
                                   child: _apiSignInButton(
@@ -323,7 +346,7 @@ class _UserLoginState extends State<UserLogin> {
                                       logoURL: 'assets/icons/facebook_logo.png',
                                       function: _initiateFacebookLogin)),
                               SizedBox(
-                                height: ScreenUtil().setHeight(35),
+                                height: ScreenUtil().setHeight(15),
                               ),
                               Container(
                                 child: _apiSignInButton(
@@ -540,22 +563,22 @@ class _UserLoginState extends State<UserLogin> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
       borderSide: BorderSide(color: Colors.blue),
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: ScreenUtil().setHeight(25)),
+        padding: EdgeInsets.symmetric(vertical: ScreenUtil().setHeight(10)),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Image(
               image: AssetImage(logoURL),
-              height: ScreenUtil().setHeight(100),
-              width: ScreenUtil().setHeight(100),
+              height: ScreenUtil().setHeight(40),
+              width: ScreenUtil().setHeight(40),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 10),
               child: Text(
                 title,
                 style: TextStyle(
-                  fontSize: ScreenUtil().setSp(45),
+                  fontSize: ScreenUtil().setSp(16),
                   color: Colors.blueAccent,
                 ),
               ),

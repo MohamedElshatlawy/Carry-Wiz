@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../screens/login_screen.dart';
-import '../themes/palette.dart';
-import '../screens/signup-screen.dart';
+
 import '../localization/language_constants.dart';
+import '../screens/login_screen.dart';
+import '../screens/signup-screen.dart';
+import '../themes/palette.dart';
 
 class SwitchButtons extends StatefulWidget {
   @override
@@ -42,7 +43,7 @@ class _SwitchButtonsState extends State<SwitchButtons> {
                       Palette.deepPurple,
                       Palette.lightOrange),
                   SizedBox(
-                    width: ScreenUtil().setWidth(50),
+                    width: ScreenUtil().setWidth(20),
                   ),
                   _buttonTheme(
                       _onPressedSignUp,
@@ -96,8 +97,8 @@ class _SwitchButtonsState extends State<SwitchButtons> {
   _buttonTheme(VoidCallback _onPressed, bool _activeButton, String title,
       Color textColor1, Color textColor2, Color color) {
     return ButtonTheme(
-      minWidth: ScreenUtil().setWidth(300),
-      height: ScreenUtil().setHeight(140),
+      minWidth: ScreenUtil().setWidth(100),
+      height: ScreenUtil().setHeight(60),
       child: RaisedButton(
         onPressed: _onPressed,
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -109,7 +110,7 @@ class _SwitchButtonsState extends State<SwitchButtons> {
         child: new Text(
           title,
           style: TextStyle(
-            fontSize: ScreenUtil().setSp(50),
+            fontSize: ScreenUtil().setSp(20),
           ),
         ),
       ),

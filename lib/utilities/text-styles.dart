@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TextStyles {
-  static TextStyle caption = TextStyle(fontSize: ScreenUtil().setSp(50));
+  static TextStyle caption = TextStyle(fontSize: ScreenUtil().setSp(20));
   static TextStyle textFieldStyle =
-      TextStyle(color: Palette.lightPurple, fontSize: ScreenUtil().setSp(50));
+      TextStyle(color: Palette.lightPurple, fontSize: ScreenUtil().setSp(20));
   static TextStyle expandedTitleTextStyle =
-      TextStyle(fontSize: ScreenUtil().setSp(50), fontWeight: FontWeight.w500);
+      TextStyle(fontSize: ScreenUtil().setSp(20), fontWeight: FontWeight.w500);
   // static TextStyle expandedAirports =
   //     TextStyle(fontSize: ScreenUtil().setSp(80), fontWeight: FontWeight.w700);
   static TextStyle errorStyle =
-      TextStyle(color: Colors.red, fontSize: ScreenUtil().setSp(50));
+      TextStyle(color: Colors.red, fontSize: ScreenUtil().setSp(20));
 
   static BoxDecoration kMessageContainerDecoration = BoxDecoration(
     border: Border(

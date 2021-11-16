@@ -12,12 +12,11 @@ import 'package:Carrywiz/models/PackageRequestRepliesList.dart';
 import 'package:Carrywiz/models/RequestCarriesListResponse.dart';
 import 'package:Carrywiz/models/RequestCarry.dart';
 import 'package:Carrywiz/models/ReviewResponseList.dart';
+import 'package:Carrywiz/models/Token.dart';
+import 'package:Carrywiz/models/UserInfo.dart';
 import 'package:Carrywiz/models/UserModel.dart';
 import 'package:Carrywiz/utilities/Constants.dart';
 import 'package:Carrywiz/utilities/SharedPreferencesManager.dart';
-import 'package:Carrywiz/models/Token.dart';
-import 'package:Carrywiz/models/UserInfo.dart';
-import 'package:connectivity/connectivity.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
@@ -92,6 +91,7 @@ class ApiAuthProvider {
     var responseHandle = _handelResponse(response);
     if (response.statusCode! == 200) {
       // If server returns an OK response, parse the JSON.
+      print('token:$token');
       return token;
     } else if (response.statusCode! < 200 ||
         response.statusCode! > 400 ||

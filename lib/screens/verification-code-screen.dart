@@ -1,30 +1,25 @@
-import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 
 import '../components/NetworkSensitive.dart';
 import '../components/submit-button.dart';
+import '../localization/language_constants.dart';
 import '../models/UserModel.dart';
-import '../services/ApiAuthProvider.dart';
-import '../services/HttpNetwork.dart';
 import '../themes/palette.dart';
 import '../utilities/text-styles.dart';
-import '../localization/language_constants.dart';
 
 class VerificationCodeScreen extends StatefulWidget {
   final UserModel userModel;
-  final String activationCode;
+  // final String activationCode;
   final String? email;
   final bool registration;
 
   const VerificationCodeScreen(
       {required this.userModel,
-      required this.activationCode,
+      // required this.activationCode,
       this.email,
       required this.registration});
 
@@ -81,13 +76,13 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
               constraints:
                   BoxConstraints(minHeight: MediaQuery.of(context).size.height),
               child: Container(
-                height: ScreenUtil().setHeight(1750),
+                // height: ScreenUtil().setHeight(1750),
                 padding: EdgeInsets.symmetric(
-                    vertical: ScreenUtil().setHeight(20),
-                    horizontal: ScreenUtil().setWidth(50)),
+                    vertical: ScreenUtil().setHeight(0),
+                    horizontal: ScreenUtil().setWidth(20)),
                 margin: EdgeInsets.symmetric(
-                  vertical: ScreenUtil().setHeight(20),
-                  horizontal: ScreenUtil().setWidth(100),
+                  vertical: ScreenUtil().setHeight(0),
+                  horizontal: ScreenUtil().setWidth(10),
                 ),
                 child: Form(
                   key: _formKey,
@@ -95,17 +90,17 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                   child: Column(
                     children: <Widget>[
                       SizedBox(
-                        height: ScreenUtil().setHeight(550.0),
+                        height: ScreenUtil().setHeight(25),
                       ),
                       Text(
                         getTranslatedValues(context, 'enter_verification_code'),
-                        style: TextStyle(fontSize: ScreenUtil().setSp(50)),
+                        style: TextStyle(fontSize: ScreenUtil().setSp(20)),
                       ),
                       defaultSizedBox,
                       TextFormField(
                         controller: _activationCodeController,
                         keyboardType: TextInputType.number,
-                        style: TextStyle(height: 1),
+                        style: TextStyle(height: 1.5),
                         validator: (val) {
                           if (val!.length == 0 || val.isEmpty)
                             return getTranslatedValues(
@@ -123,7 +118,7 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                             Icons.verified_user,
                           ),
                           labelStyle: TextStyle(
-                              fontSize: ScreenUtil().setSp(50),
+                              fontSize: ScreenUtil().setSp(20),
                               fontWeight: FontWeight.w600),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(6)),
@@ -141,42 +136,43 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                               getTranslatedValues(context, 'register_button'),
                           buttonColor: Palette.lightOrange,
                           onPressed: () async {
-                            if (_validateInputs()) {
-                              var connectionStatus;
-                              InternetConnectionChecker()
-                                  .connectionStatus
-                                  .then((value) => connectionStatus = value);
-                              if (connectionStatus ==
-                                  InternetConnectionStatus.connected) {
-                                _turnOnCircularBar();
-                                try {
-                                  ApiAuthProvider apiAuthProvider =
-                                      ApiAuthProvider();
-                                  await apiAuthProvider
-                                      .registerUser(widget.userModel)
-                                      .then((value) {
-                                    Toast.show(
-                                        getTranslatedValues(context,
-                                            'account_registered_successfully'),
-                                        context,
-                                        duration: Toast.lengthLong,
-                                        gravity: Toast.bottom);
-                                    Navigator.pushNamedAndRemoveUntil(
-                                        context, '/login_screen', (_) => false);
-                                  });
-                                } on DioError catch (error) {
-                                  String errorMessage =
-                                      HttpNetWork.checkNetworkExceptionMessage(
-                                          error, context);
-                                  _showMessageDialog(errorMessage);
-                                } finally {
-                                  _turnOffCircularBar();
-                                }
-                              } else {
-                                _showMessageDialog(getTranslatedValues(
-                                    context, 'offline_user'));
-                              }
-                            }
+                            // if (_validateInputs()) {
+                            //   var connectionStatus;
+                            //   InternetConnectionChecker()
+                            //       .connectionStatus
+                            //       .then((value) => connectionStatus = value);
+                            //   if (connectionStatus ==
+                            //       InternetConnectionStatus.connected) {
+                            //     _turnOnCircularBar();
+                            //     try {
+                            //       ApiAuthProvider apiAuthProvider =
+                            //           ApiAuthProvider();
+                            //       await apiAuthProvider
+                            //           .registerUser(widget.userModel)
+                            //           .then((value) {
+                            Toast.show(
+                                getTranslatedValues(
+                                    context, 'account_registered_successfully'),
+                                context,
+                                duration: Toast.lengthLong,
+                                gravity: Toast.bottom);
+                            Navigator.pushNamedAndRemoveUntil(
+                                context, '/login_screen', (_) => false);
+                            // });
+                            //     } on DioError catch (error) {
+                            //       String errorMessage =
+                            //           HttpNetWork.checkNetworkExceptionMessage(
+                            //               error, context);
+                            //       _showMessageDialog(errorMessage);
+                            //     } finally {
+                            //       _turnOffCircularBar();
+                            //     }
+                            //   } else {
+                            //     _showMessageDialog(getTranslatedValues(
+                            //         context, 'offline_user'));
+                            //   }
+                            // }
+                            //////
                           },
                         ),
                       ),

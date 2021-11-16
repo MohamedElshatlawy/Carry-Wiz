@@ -2,9 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../localization/language_constants.dart';
 import '../screens/signup-screen.dart';
 import '../utilities/text-styles.dart';
-import '../localization/language_constants.dart';
 
 class Gender extends StatefulWidget {
   static late String _gender;
@@ -50,13 +51,13 @@ class _Gender extends State<Gender> {
                   textAlign: TextAlign.left,
                   style: TextStyle(
                       color: widget.darkText! ? null : Colors.white,
-                      fontSize: ScreenUtil().setSp(40)),
+                      fontSize: ScreenUtil().setSp(20)),
                 ),
                 IconButton(
                   icon: FaIcon(
                     FontAwesomeIcons.male,
                     color: _pressedMale ? Colors.amber : Colors.grey,
-                    size: ScreenUtil().setSp(70),
+                    size: ScreenUtil().setSp(30),
                   ),
                   // materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   // shape: CircleBorder(),
@@ -83,13 +84,13 @@ class _Gender extends State<Gender> {
                   textAlign: TextAlign.left,
                   style: TextStyle(
                       color: widget.darkText! ? null : Colors.white,
-                      fontSize: ScreenUtil().setSp(40)),
+                      fontSize: ScreenUtil().setSp(20)),
                 ),
                 IconButton(
                   icon: FaIcon(
                     FontAwesomeIcons.female,
                     color: _pressedFemale ? Colors.amber : Colors.grey,
-                    size: ScreenUtil().setSp(70),
+                    size: ScreenUtil().setSp(30),
                   ),
                   color: _pressedFemale ? Colors.white : Colors.grey,
                   onPressed: () {
@@ -106,7 +107,7 @@ class _Gender extends State<Gender> {
                   textAlign: TextAlign.left,
                   style: TextStyle(
                       color: widget.darkText! ? null : Colors.white,
-                      fontSize: ScreenUtil().setSp(40)),
+                      fontSize: ScreenUtil().setSp(20)),
                 ),
               ],
             ),

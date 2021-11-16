@@ -1,16 +1,17 @@
 import 'dart:async';
 
+import 'package:Carrywiz/screens/request-carries-list-screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:toast/toast.dart';
-import '../screens/carries-list-screen.dart';
-import '../screens/dashboard.dart';
-import '../screens/inbox.dart';
-import '../screens/profile-screen.dart';
-import '../screens/request-carries-list-screen.dart';
+
 import '../localization/language_constants.dart';
+import 'carries-list-screen.dart';
+import 'dashboard.dart';
+import 'inbox.dart';
+import 'profile-screen.dart';
 
 class MyHomePage extends StatefulWidget {
   int bottomSelectedIndex;
@@ -59,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
       BottomNavigationBarItem(
           icon: Icon(
             Icons.home,
-            size: ScreenUtil().setSp(70),
+            // size: ScreenUtil().setSp(20),
           ),
           title: Text(
             getTranslatedValues(context, 'home_title'),
@@ -67,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
       BottomNavigationBarItem(
           icon: FaIcon(
             FontAwesomeIcons.box,
-            size: ScreenUtil().setSp(50),
+            // size: ScreenUtil().setSp(20),
           ),
           title: Text(
             getTranslatedValues(context, 'need_space_title'),
@@ -75,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
       BottomNavigationBarItem(
           icon: FaIcon(
             FontAwesomeIcons.suitcase,
-            size: ScreenUtil().setSp(50),
+            // size: ScreenUtil().setSp(20),
           ),
           title: Text(
             getTranslatedValues(context, 'have_space_title'),
@@ -83,7 +84,10 @@ class _MyHomePageState extends State<MyHomePage> {
       BottomNavigationBarItem(
           icon: Stack(
             children: <Widget>[
-              Icon(Icons.inbox),
+              Icon(
+                Icons.inbox,
+                // size: ScreenUtil().setSp(20),
+              ),
               // Positioned(
               //   right: 0,
               //   child: StreamBuilder(
@@ -105,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
       BottomNavigationBarItem(
           icon: Icon(
             Icons.person,
-            size: ScreenUtil().setSp(60),
+            // size: ScreenUtil().setSp(20),
           ),
           title: Text(
             getTranslatedValues(context, 'profile_title'),
@@ -156,12 +160,14 @@ class _MyHomePageState extends State<MyHomePage> {
         body: buildPageView(),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
-          selectedFontSize: ScreenUtil().setSp(38),
-          unselectedFontSize: ScreenUtil().setSp(33),
-          unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
+          selectedFontSize: ScreenUtil().setSp(18),
+          unselectedFontSize: ScreenUtil().setSp(18),
+          unselectedLabelStyle: TextStyle(
+            fontWeight: FontWeight.w600,
+          ),
           selectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
           currentIndex: widget.bottomSelectedIndex,
-          iconSize: ScreenUtil().setSp(70),
+          iconSize: ScreenUtil().setSp(20),
           onTap: (index) {
             bottomTapped(index);
           },

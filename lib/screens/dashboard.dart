@@ -1,23 +1,22 @@
+import 'package:Carrywiz/components/default-app-bar-widget.dart';
+import 'package:Carrywiz/injector/injector.dart';
+import 'package:Carrywiz/localization/language_constants.dart';
+import 'package:Carrywiz/models/UserInfo.dart';
+import 'package:Carrywiz/screens/reviews-screen.dart';
+import 'package:Carrywiz/services/ApiAuthProvider.dart';
+import 'package:Carrywiz/services/HttpNetwork.dart';
+import 'package:Carrywiz/utilities/SharedPreferencesManager.dart';
+import 'package:Carrywiz/utilities/text-styles.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import '../components/default-app-bar-widget.dart';
-import '../injector/injector.dart';
-import '../screens/completed-trips-screen.dart';
-import '../screens/reviews-screen.dart';
-import '../screens/package-requests-screen.dart';
-import '../services/ApiAuthProvider.dart';
-import '../services/HttpNetwork.dart';
-import '../utilities/SharedPreferencesManager.dart';
-import '../utilities/text-styles.dart';
-import '../models/UserInfo.dart';
-import '../localization/language_constants.dart';
+
+import 'completed-trips-screen.dart';
+import 'package-requests-screen.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -27,7 +26,7 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard>
     with AutomaticKeepAliveClientMixin<Dashboard> {
   final TextStyle whiteText = TextStyle(color: Colors.white);
-
+  //
   final SharedPreferencesManager _sharedPreferencesManager =
       locator<SharedPreferencesManager>();
   late String _userName;
@@ -45,6 +44,7 @@ class _DashboardState extends State<Dashboard>
     _userInfo = _apiAuthProvider.getUserInfoByUserId(_userId);
   }
 
+  //
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 

@@ -1,29 +1,24 @@
 import 'dart:async';
 
-import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:dio/dio.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 
-import '../screens/verification-code-screen.dart';
-import '../utilities/vertical_spacing.dart';
 import '../components/NetworkSensitive.dart';
 import '../components/gender.dart';
 import '../components/submit-button.dart';
 import '../components/switch-buttons.dart';
-import '../services/HttpNetwork.dart';
-import '../themes/palette.dart';
-import '../utilities/validations.dart';
-import '../models/UserModel.dart';
-import '../services/ApiAuthProvider.dart';
-import '../utilities/text-styles.dart';
 import '../localization/language_constants.dart';
+import '../models/UserModel.dart';
+import '../screens/verification-code-screen.dart';
+import '../themes/palette.dart';
+import '../utilities/text-styles.dart';
+import '../utilities/validations.dart';
+import '../utilities/vertical_spacing.dart';
 
 class UserRegister extends StatefulWidget {
   final String genderValue = 'Prefer not to say';
@@ -42,9 +37,9 @@ class _UserRegisterState extends State<UserRegister> {
   late String _email;
   late String _phoneNumber;
   late String _password;
-  late String _country;
+  late String _country = 'مصر';
   late String _countryDialCode = '+20';
-  late String _countryCode;
+  late String _countryCode = 'EG';
   bool _autoValidate = false;
   bool _saving = false;
 
@@ -156,27 +151,26 @@ class _UserRegisterState extends State<UserRegister> {
               ),
               child: Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: ScreenUtil().setWidth(100.0),
-                ),
+                    vertical: ScreenUtil().setHeight(30),
+                    horizontal: ScreenUtil().setWidth(25)),
                 child: Form(
                   key: _formKey,
                   autovalidate: _autoValidate,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      defaultSizedBoxHeight,
                       RichText(
                         text: TextSpan(
                           text: getTranslatedValues(context, 'carry'),
                           style: TextStyle(
-                              fontSize: ScreenUtil().setSp(70),
+                              fontSize: ScreenUtil().setSp(35),
                               fontWeight: FontWeight.w300,
                               color: Colors.white),
                           children: <TextSpan>[
                             TextSpan(
                               text: getTranslatedValues(context, 'wiz'),
                               style: TextStyle(
-                                  fontSize: ScreenUtil().setSp(70),
+                                  fontSize: ScreenUtil().setSp(35),
                                   fontWeight: FontWeight.w700,
                                   color: Colors.white),
                             ),
@@ -196,7 +190,7 @@ class _UserRegisterState extends State<UserRegister> {
                           controller: _nameController,
                           style: TextStyle(
                               color: Colors.white,
-                              height: ScreenUtil().setHeight(3)),
+                              height: ScreenUtil().setHeight(1.5)),
                           validator: (val) {
                             return Validations.validateName(
                                 _nameController.text, context);
@@ -212,11 +206,15 @@ class _UserRegisterState extends State<UserRegister> {
                               prefixIcon: Icon(
                                 Icons.assignment,
                                 color: Palette.lightOrange,
-                                size: ScreenUtil().setSp(45),
+                                size: ScreenUtil().setSp(20),
                               ),
                               counterText: '',
                               labelStyle: TextStyles.textFieldStyle,
                               errorStyle: TextStyles.errorStyle,
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Palette.lightOrange, width: 2),
+                              ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(6)),
@@ -224,7 +222,9 @@ class _UserRegisterState extends State<UserRegister> {
                               )),
                         ),
                       ),
-                      defaultSizedBoxHeight,
+                      SizedBox(
+                        height: ScreenUtil().setHeight(30),
+                      ),
                       Theme(
                         data: ThemeData(
                           primaryColor: Palette.lightOrange,
@@ -235,7 +235,7 @@ class _UserRegisterState extends State<UserRegister> {
                           controller: _emailController,
                           style: TextStyle(
                               color: Colors.white,
-                              height: ScreenUtil().setHeight(3)),
+                              height: ScreenUtil().setHeight(1.5)),
                           validator: (val) {
                             return Validations.validateEmail(val!, context);
                           },
@@ -253,11 +253,15 @@ class _UserRegisterState extends State<UserRegister> {
                               prefixIcon: Icon(
                                 Icons.email,
                                 color: Palette.lightOrange,
-                                size: ScreenUtil().setSp(45),
+                                size: ScreenUtil().setSp(20),
                               ),
                               counterText: '',
                               labelStyle: TextStyles.textFieldStyle,
                               errorStyle: TextStyles.errorStyle,
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Palette.lightOrange, width: 2),
+                              ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(6)),
@@ -275,12 +279,12 @@ class _UserRegisterState extends State<UserRegister> {
                                 prefixIcon: Icon(
                                   Icons.location_on,
                                   color: Palette.lightOrange,
-                                  size: ScreenUtil().setSp(45),
+                                  size: ScreenUtil().setSp(20),
                                 ),
                                 suffixIcon: Icon(
                                   Icons.arrow_drop_down,
                                   color: Colors.white,
-                                  size: ScreenUtil().setSp(80),
+                                  size: ScreenUtil().setSp(30),
                                 ),
                                 errorStyle: TextStyles.errorStyle,
                                 labelText: getTranslatedValues(
@@ -291,7 +295,7 @@ class _UserRegisterState extends State<UserRegister> {
                                 onChanged: _onCountryChange,
                                 textStyle: TextStyle(
                                     color: Colors.white,
-                                    fontSize: ScreenUtil().setSp(60)),
+                                    fontSize: ScreenUtil().setSp(25)),
                                 textOverflow: TextOverflow.ellipsis,
                                 // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
                                 initialSelection: 'EG',
@@ -307,6 +311,7 @@ class _UserRegisterState extends State<UserRegister> {
                           );
                         },
                       ),
+                      defaultSizedBoxHeight,
                       Row(
                         children: <Widget>[
                           Expanded(
@@ -315,6 +320,7 @@ class _UserRegisterState extends State<UserRegister> {
                           )),
                         ],
                       ),
+                      defaultSizedBoxHeight,
                       Theme(
                         data: ThemeData(
                           primaryColor: Palette.lightOrange,
@@ -338,7 +344,7 @@ class _UserRegisterState extends State<UserRegister> {
                                 prefixIcon: Icon(
                                   Icons.date_range,
                                   color: Palette.lightOrange,
-                                  size: ScreenUtil().setSp(45),
+                                  size: ScreenUtil().setSp(20),
                                 ),
                                 labelStyle: TextStyles.textFieldStyle,
                               ),
@@ -353,25 +359,27 @@ class _UserRegisterState extends State<UserRegister> {
                             child: DropdownButtonHideUnderline(
                               child: InputDecorator(
                                 decoration: InputDecoration(
+                                  contentPadding:
+                                      EdgeInsets.symmetric(vertical: 10),
                                   fillColor: Colors.white,
                                   isDense: true,
                                 ),
                                 child: CountryCodePicker(
+                                  padding: EdgeInsets.symmetric(vertical: 10),
+
                                   onChanged: _onCountryChange,
                                   textStyle: TextStyle(
                                       color: Colors.white,
-                                      fontSize: ScreenUtil().setSp(50)),
+                                      fontSize: ScreenUtil().setSp(20)),
                                   textOverflow: TextOverflow.ellipsis,
                                   // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
-                                  initialSelection: _countryCode == null
-                                      ? 'EG'
-                                      : _countryCode,
+                                  initialSelection: _countryCode,
                                   favorite: ['+02', 'EG'],
                                   // optional. Shows only country name and flag
                                   showCountryOnly: false,
                                   // optional. Shows only country name and flag when popup is closed.
                                   showOnlyCountryWhenClosed: false,
-                                  flagWidth: ScreenUtil().setSp(50),
+                                  flagWidth: ScreenUtil().setSp(30),
                                   // optional. aligns the flag and the Text left
                                   alignLeft: true,
                                 ),
@@ -390,7 +398,7 @@ class _UserRegisterState extends State<UserRegister> {
                                 controller: _phoneNumberController,
                                 validator: (val) {
                                   return Validations.validatePhone(
-                                      _nameController.text, context);
+                                      _phoneNumberController.text, context);
                                 },
                                 onSaved: (val) {
                                   _phoneNumber = val!;
@@ -400,7 +408,7 @@ class _UserRegisterState extends State<UserRegister> {
                                 },
                                 style: TextStyle(
                                     color: Colors.white,
-                                    height: ScreenUtil().setHeight(3)),
+                                    height: ScreenUtil().setHeight(1.5)),
                                 decoration: InputDecoration(
                                     labelText: getTranslatedValues(
                                         context, 'phone_number'),
@@ -410,12 +418,16 @@ class _UserRegisterState extends State<UserRegister> {
                                     prefixIcon: Icon(
                                       Icons.local_phone,
                                       color: Palette.lightOrange,
-                                      size: ScreenUtil().setSp(45),
+                                      size: ScreenUtil().setSp(20),
                                     ),
                                     labelStyle: TextStyles.textFieldStyle,
                                     hintStyle: TextStyles.textFieldStyle,
                                     errorStyle: TextStyles.errorStyle,
                                     errorMaxLines: 2,
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Palette.lightOrange, width: 2),
+                                    ),
                                     enabledBorder: OutlineInputBorder(
                                       borderRadius:
                                           BorderRadius.all(Radius.circular(6)),
@@ -439,7 +451,7 @@ class _UserRegisterState extends State<UserRegister> {
                           controller: _passwordController,
                           style: TextStyle(
                               color: Colors.white,
-                              height: ScreenUtil().setHeight(3)),
+                              height: ScreenUtil().setHeight(1.5)),
                           validator: (val) {
                             return Validations.validatePassword(val!, context);
                           },
@@ -455,11 +467,15 @@ class _UserRegisterState extends State<UserRegister> {
                               prefixIcon: Icon(
                                 Icons.lock,
                                 color: Palette.lightOrange,
-                                size: ScreenUtil().setSp(45),
+                                size: ScreenUtil().setSp(20),
                               ),
                               labelStyle: TextStyles.textFieldStyle,
                               errorStyle: TextStyles.errorStyle,
                               errorMaxLines: 5,
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Palette.lightOrange, width: 2),
+                              ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(6)),
@@ -474,83 +490,84 @@ class _UserRegisterState extends State<UserRegister> {
                           buttonColor: Palette.lightOrange,
                           onPressed: () async {
                             if (_validateInputs()) {
-                              var connectionStatus;
-                              InternetConnectionChecker()
-                                  .connectionStatus
-                                  .then((value) => connectionStatus = value);
-                              if (connectionStatus ==
-                                  InternetConnectionStatus.connected) {
-                                try {
-                                  _turnOnCircularBar();
-                                  ApiAuthProvider apiAuthProvider =
-                                      ApiAuthProvider();
-                                  await apiAuthProvider
-                                      .checkUserUniqueData(
-                                          phoneNumber: _phoneNumber,
-                                          emailAddress: _email)
-                                      .then((value) async {
-                                    await apiAuthProvider
-                                        .sendRegistrationActivationCode(
-                                      email: _email,
-                                      userName: _name,
-                                    )
-                                        .then((activationCode) async {
-                                      _gender = Gender.gender;
-                                      UserModel newUser = UserModel(
-                                          name: _name,
-                                          dateOfBirth: _dateOnlyValue,
-                                          gender: _gender,
-                                          phoneNumber: _phoneNumber,
-                                          countryDialCode: _countryDialCode,
-                                          email: _email,
-                                          password: _password,
-                                          country: _country != null
-                                              ? _country
-                                              : 'مصر');
-                                      Toast.show(
-                                          getTranslatedValues(context,
-                                              'verification_code_sent'),
-                                          context,
-                                          duration: Toast.lengthLong,
-                                          gravity: Toast.bottom);
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (_) =>
-                                                VerificationCodeScreen(
-                                                  userModel: newUser,
-                                                  activationCode:
-                                                      activationCode!,
-                                                  registration: true,
-                                                )),
-                                      );
-                                    });
-                                  });
-                                } on DioError catch (error) {
-                                  String errorMessage = '';
-                                  if (error.response
-                                      .toString()
-                                      .contains('phone_number_UNIQUE')) {
-                                    errorMessage = getTranslatedValues(
-                                        context, 'phone_exists');
-                                  } else if (error.response
-                                      .toString()
-                                      .contains('Couldn\'t send email to')) {
-                                    errorMessage =
-                                        '${getTranslatedValues(context, 'couldnot_send_email')} $_email ${getTranslatedValues(context, 'check_email_address')}';
-                                  } else {
-                                    errorMessage =
-                                        HttpNetWork.checkUserExceptionMessage(
-                                            error, context);
-                                  }
-                                  _showMessageDialog(errorMessage);
-                                } finally {
-                                  _turnOffCircularBar();
-                                }
-                              } else {
-                                _showMessageDialog(getTranslatedValues(
-                                    context, 'offline_user'));
-                              }
+                              // var connectionStatus;
+                              // await InternetConnectionChecker()
+                              //     .connectionStatus
+                              //     .then((value) {
+                              //   connectionStatus = value;
+                              //   print("connection Status:${value}");
+                              // });
+                              // if (connectionStatus ==
+                              //     InternetConnectionStatus.connected) {
+                              // try {
+                              // _turnOnCircularBar();
+                              // ApiAuthProvider apiAuthProvider =
+                              //     ApiAuthProvider();
+                              // await apiAuthProvider
+                              //     .checkUserUniqueData(
+                              //         phoneNumber: _phoneNumber,
+                              //         emailAddress: _email)
+                              //     .then((value) async {
+                              //   await apiAuthProvider
+                              //       .sendRegistrationActivationCode(
+                              //     email: _email,
+                              //     userName: _name,
+                              //   )
+                              //       .then((activationCode) async {
+                              _gender = Gender.gender;
+                              UserModel newUser = UserModel(
+                                  name: _name,
+                                  dateOfBirth: _dateOnlyValue,
+                                  gender: _gender,
+                                  phoneNumber: _phoneNumber,
+                                  countryDialCode: _countryDialCode,
+                                  email: _email,
+                                  password: _password,
+                                  country: _country
+                                  // != null ? _country : 'مصر'
+                                  );
+                              Toast.show(
+                                  getTranslatedValues(
+                                      context, 'verification_code_sent'),
+                                  context,
+                                  duration: Toast.lengthLong,
+                                  gravity: Toast.bottom);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => VerificationCodeScreen(
+                                          userModel: newUser,
+                                          // activationCode: activationCode!,
+                                          registration: true,
+                                        )),
+                              );
+                              //   });
+                              // });
+                              // } on DioError catch (error) {
+                              //   String errorMessage = '';
+                              //   if (error.response
+                              //       .toString()
+                              //       .contains('phone_number_UNIQUE')) {
+                              //     errorMessage = getTranslatedValues(
+                              //         context, 'phone_exists');
+                              //   } else if (error.response
+                              //       .toString()
+                              //       .contains('Couldn\'t send email to')) {
+                              //     errorMessage =
+                              //         '${getTranslatedValues(context, 'couldnot_send_email')} $_email ${getTranslatedValues(context, 'check_email_address')}';
+                              //   } else {
+                              //     errorMessage =
+                              //         HttpNetWork.checkUserExceptionMessage(
+                              //             error, context);
+                              //   }
+                              //   _showMessageDialog(errorMessage);
+                              // } finally {
+                              //   _turnOffCircularBar();
+                              // }
+                              // } else {
+                              //   _showMessageDialog(getTranslatedValues(
+                              //       context, 'offline_user'));
+                              // }
                             }
                           },
                         ),

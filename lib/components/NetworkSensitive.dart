@@ -1,6 +1,5 @@
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 class NetworkSensitive extends StatelessWidget {
   final Widget child;
@@ -23,7 +22,7 @@ class NetworkSensitive extends StatelessWidget {
     }
 
     return Opacity(
-      opacity: 0.2,
+      opacity: 1,
       child: child,
     );
   }

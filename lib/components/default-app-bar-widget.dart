@@ -15,9 +15,9 @@ class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: AutoSizeText(
         title,
-        style: TextStyle(fontSize: ScreenUtil().setSp(50)),
+        style: TextStyle(fontSize: ScreenUtil().setSp(20)),
       ),
-      toolbarHeight: ScreenUtil().setHeight(250),
+      toolbarHeight: ScreenUtil().setHeight(50),
       centerTitle: true,
       automaticallyImplyLeading: false,
       actions: <Widget>[
@@ -26,7 +26,7 @@ class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
             padding: EdgeInsets.only(right: ScreenUtil().setWidth(10)),
             icon: Icon(
               Icons.brightness_low,
-              size: ScreenUtil().setSp(50),
+              size: ScreenUtil().setSp(20),
             ),
             onPressed: () => Navigator.push(
               context,
@@ -38,5 +38,5 @@ class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(ScreenUtil().setHeight(250));
+  Size get preferredSize => Size.fromHeight(ScreenUtil().setHeight(50));
 }

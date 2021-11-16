@@ -23,7 +23,7 @@ class SubmitButton extends StatelessWidget {
   Widget build(BuildContext context) {
 //    ScreenUtil.init(context, allowFontScaling: true);
     return ButtonTheme(
-      height: ScreenUtil().setHeight(140),
+      height: ScreenUtil().setHeight(60),
       minWidth: double.infinity,
       child: FlatButton(
         onPressed: onPressed,
@@ -37,7 +37,7 @@ class SubmitButton extends StatelessWidget {
           title,
           textAlign: TextAlign.center,
           maxLines: 2,
-          style: TextStyle(fontSize: ScreenUtil().setSp(50)),
+          style: TextStyle(fontSize: ScreenUtil().setSp(20)),
         ),
       ),
     );
